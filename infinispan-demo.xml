@@ -42,12 +42,10 @@
       <hash numOwners="2" numVirtualNodes="5"/>
       <sync/>
     </clustering>
-    <!--
     <eviction
         wakeUpInterval="500"
         maxEntries="200000"
         strategy="LIRS" />
-    -->
   </default>
 
 </infinispan>
