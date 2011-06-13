@@ -43,10 +43,8 @@ class TopFrame(app: SimpleSwingApplication) extends MainFrame {
       })
     }
     contents += new Menu ("Debug") {
-      contents += new MenuItem(Action("repaint") {
-        InfinispanSwingDemo.topFrame.cachePanelList.foreach(cachePanel => {
-          cachePanel.update
-        })
+      contents += new MenuItem(Action("Refresh") {
+        refresh
       })
       contents += new MenuItem(Action("processEviction") {
         try {
@@ -79,11 +77,12 @@ class TopFrame(app: SimpleSwingApplication) extends MainFrame {
               println("key=" + entry.getKey() +
                       ", value=" + entry.getValue() +
                       ", lifespan=" + entry.getLifespan() +
-                      ", maxIdle=" + entry.getMaxIdle(),
-                      ", isRemoved=" + entry.isRemoved(),
-                      ", isEvicted=" + entry.isEvicted(),
-                      ", isExpired=" + entry.isExpired(),
-                      ", isValid=" + entry.isValid()
+                      ", maxIdle=" + entry.getMaxIdle() +
+                      ", isRemoved=" + entry.isRemoved() +
+                      ", isEvicted=" + entry.isEvicted() +
+                      ", isExpired=" + entry.isExpired() +
+                      ", isValid=" + entry.isValid() +
+                      ", class=" + entry.getClass()
                     )
             })
           })
@@ -178,6 +177,19 @@ class TopFrame(app: SimpleSwingApplication) extends MainFrame {
       }
     } catch {
       case _ => ; // ignore
+    }
+  }
+
+  def refresh {
+    InfinispanSwingDemo.topFrame.cachePanelList.foreach(cachePanel => {
+      cachePanel.update
+    })
+  }
+
+  def refreshDelay {
+    actor {
+      Thread.sleep(1000)
+      refresh
     }
   }
 }

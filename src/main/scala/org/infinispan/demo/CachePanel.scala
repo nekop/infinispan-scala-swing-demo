@@ -82,7 +82,7 @@ class CachePanel(val cache: Cache[String, String], val id: Int) extends GroupPan
     )
   }
 
-  def update = {
+  def update {
     Swing.onEDT {
       if (cache.getStatus == RUNNING) {
         cacheBar.value = cache.size
@@ -97,23 +97,26 @@ class CachePanel(val cache: Cache[String, String], val id: Int) extends GroupPan
   class CacheListener {
     @CacheStarted
     def cacheStarted(e: CacheStartedEvent) {
-      update
+      InfinispanSwingDemo.topFrame.refreshDelay
     }
     
     @ViewChanged
     @Merged
     def viewChangeEvent(e: ViewChangedEvent) {
-      update
+      InfinispanSwingDemo.topFrame.refreshDelay
     }
 
-    @DataRehashed
     @CacheEntryCreated
     @CacheEntryModified
     @CacheEntryRemoved
     @CacheEntryEvicted
-    @TopologyChanged
     def change(e: Event[String,String]) {
-      update
+      if (!e.isPre) update
+    }
+
+    @DataRehashed
+    def rehash(e: Event[String,String]) {
+      if (!e.isPre) InfinispanSwingDemo.topFrame.refreshDelay
     }
   }
 }
