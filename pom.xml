@@ -46,9 +46,10 @@
   </repositories>
 
   <properties>
-    <version.infinispan>5.0.0.CR4</version.infinispan>
+    <version.infinispan>5.0.0-SNAPSHOT</version.infinispan>
     <version.scala>2.8.1</version.scala>
     <version.jcipannotations>1.0</version.jcipannotations>
+    <version.log4j>1.2.16</version.log4j>
   </properties>
 
   <dependencies>
@@ -66,6 +67,12 @@
       <groupId>net.jcip</groupId>
       <artifactId>jcip-annotations</artifactId>
       <version>${version.jcipannotations}</version>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>log4j</groupId>
+      <artifactId>log4j</artifactId>
+      <version>${version.log4j}</version>
       <optional>true</optional>
     </dependency>
   </dependencies>
@@ -106,6 +113,10 @@
             <arg>-deprecation</arg>
           </args>
           <jvmArgs>
+<!--
+            <jvmArg>-javaagent:${byteman.home}/lib/byteman.jar=boot:${byteman.home}/lib/byteman.jar,listener:true</jvmArg>
+            <jvmArg>-Dorg.jboss.byteman.transform.all</jvmArg>
+-->
             <jvmArg>-Djava.net.preferIPv4Stack=true</jvmArg>
             <jvmArg>-Djgroups.bind_addr=localhost</jvmArg>
           </jvmArgs>
