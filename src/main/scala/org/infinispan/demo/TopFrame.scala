@@ -188,8 +188,10 @@ class TopFrame(app: SimpleSwingApplication) extends MainFrame {
 
   def refreshDelay {
     actor {
-      Thread.sleep(1000)
-      refresh
+      0 until 4 foreach (i => {
+        Thread.sleep(500)
+        refresh
+      })
     }
   }
 }
