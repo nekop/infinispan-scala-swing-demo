@@ -12,4 +12,10 @@ object InfinispanSwingDemo extends SimpleSwingApplication {
     topFrame
   }
 
+  override def shutdown {
+    InfinispanSwingDemo.topFrame.cachePanelList.foreach(cachePanel => {
+      cachePanel.stopCache
+    })
+  }
+
 }
