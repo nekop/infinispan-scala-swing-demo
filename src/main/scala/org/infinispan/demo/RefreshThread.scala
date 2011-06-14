@@ -42,9 +42,11 @@ object RefreshThread extends Thread {
     }
     Swing.onEDT {
       var entryCount = 0
+      var cacheCount = 0
       InfinispanSwingDemo.topFrame.cachePanelList.foreach(cachePanel => {
         if (cachePanel.cache.getStatus == RUNNING) {
           cachePanel.cacheBar.value = cachePanel.cache.size
+          cacheCount += 1
           entryCount += cachePanel.cache.size
         } else {
           cachePanel.cacheBar.value = 0
@@ -52,6 +54,7 @@ object RefreshThread extends Thread {
         cachePanel.cacheBar.repaint
       })
       InfinispanSwingDemo.topFrame.statusPanel.updateEntryCountLabel(entryCount)
+      InfinispanSwingDemo.topFrame.statusPanel.updateCacheCountLabel(cacheCount)
     }
   }
 }
