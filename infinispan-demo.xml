@@ -27,7 +27,7 @@
     <!--
         <globalJmxStatistics enabled="true" />
     -->
-    <transport>
+    <transport siteId="localsite">
       <properties>
         <property name="configurationFile" value="jgroups-udp.xml" />
       </properties>
@@ -38,9 +38,8 @@
     <clustering mode="distribution">
       <!-- Do not set onRehash=false,
            it currently doesn't work and I'll investigate later -->
-      <l1 enabled="false" onRehash="true" lifespan="0"/>
+      <l1 enabled="true" onRehash="true" lifespan="0"/>
       <hash numOwners="2"/>
-      <!-- Virtual nodes is not working properly, data loss -->
 <!--
       <hash
           numOwners="2"

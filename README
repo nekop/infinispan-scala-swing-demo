@@ -22,4 +22,4 @@ FAQs:
 * Entry Count doubled.
   - It's because we have 1 backup copy for every entry, see hash.numOwners in infinispan-demo.xml.
 * Entry Count shows stale/wrong value on rehash (during start/stop caches)
-  - Right. The GUI is not strict here for performance reason. We don't want to block or synch caches.
+  - Right, this happens when l1 is enabled. If disabled some entries leak, so this is a limitation for now. Will investigate later.
