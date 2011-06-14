@@ -23,6 +23,8 @@ import org.infinispan.notifications.cachemanagerlistener.event._
 
 class TopFrame(app: SimpleSwingApplication) extends MainFrame {
 
+  RefreshThread.start
+
   var cacheCounter = 1
 
   val topFrame = this
@@ -34,6 +36,7 @@ class TopFrame(app: SimpleSwingApplication) extends MainFrame {
     preferredSize = new Dimension(200, 200)
     contents = mainPanel
   }
+  val statusPanel = new StatusPanel
   
   title = "Infinispan Swing Demo"
   menuBar = new MenuBar {
@@ -44,14 +47,12 @@ class TopFrame(app: SimpleSwingApplication) extends MainFrame {
     }
     contents += new Menu ("Debug") {
       contents += new MenuItem(Action("Refresh") {
-        refresh
+        RefreshThread.refresh
       })
       contents += new MenuItem(Action("processEviction") {
         try {
           InfinispanSwingDemo.topFrame.cachePanelList.foreach(cachePanel => {
             cachePanel.cache.getAdvancedCache.getEvictionManager.processEviction
-            println(cachePanel.cache.getAdvancedCache.getEvictionManager)
-            println(cachePanel.cache.getAdvancedCache.getEvictionManager.isEnabled)
           })
         } catch {
           // todo
@@ -110,26 +111,21 @@ class TopFrame(app: SimpleSwingApplication) extends MainFrame {
 
     horizontalGroup {
       sequential(
-        parallel()(topPanel, scrollPane)
+        parallel()(topPanel, scrollPane, statusPanel)
       )
     }
 
     verticalGroup {
       sequential(
         parallel(Alignment.Baseline)(topPanel),
-        parallel(Alignment.Baseline)(scrollPane)
+        parallel(Alignment.Baseline)(scrollPane),
+        parallel(Alignment.Baseline)(statusPanel)
       )
     }
   }
 
   // testing, auto start
   startCache("infinispan-demo.xml")
-  // Thread.sleep(200)
-  // startCache("infinispan-demo.xml")
-  // Thread.sleep(200)
-  // startCache("infinispan-demo.xml")
-  // Thread.sleep(200)
-  // startCache("infinispan-demo.xml")
 
   def startCache(cacheConfigFile: String) {
     val i = cacheCounter
@@ -137,61 +133,13 @@ class TopFrame(app: SimpleSwingApplication) extends MainFrame {
     // todo use SwingWorker, show progress spinner or something
     actor {
       // todo deal with exceptions, no xml provided
-      var resource = getClass.getClassLoader.getResource(cacheConfigFile)
-      if (resource == null) {
-        val f = new File(cacheConfigFile)
-        if (f.exists) resource = f.toURI.toURL
-      }
-      if (resource == null) resource = new URL(cacheConfigFile)
-
-      var cacheManager: DefaultCacheManager = null
-      if (cacheManager == null) {
-        val stream = resource.openStream()
-        try {
-          cacheManager = new DefaultCacheManager(stream)
-        } finally {
-          close(stream)
-        }
-      } 
-      var cache: Cache[String,String] = cacheManager.getCache()
-      val cachePanel = new CachePanel(cache, i)
+      val cachePanel = new CachePanel(cacheConfigFile, i)
       cachePanelList += cachePanel
       Swing.onEDT {
         mainPanel.contents += cachePanel
         mainPanel.revalidate
-        // todo this should not be here...
-        InfinispanSwingDemo.topFrame.cachePanelList.foreach(cachePanel => {
-          cachePanel.update
-        })
-        println("Added cachePanel")
       }
     }
-
-    println("done")
   }
 
-  def close(in: InputStream) {
-    try {
-      if (in != null) {
-        in.close()
-      }
-    } catch {
-      case _ => ; // ignore
-    }
-  }
-
-  def refresh {
-    InfinispanSwingDemo.topFrame.cachePanelList.foreach(cachePanel => {
-      cachePanel.update
-    })
-  }
-
-  def refreshDelay {
-    actor {
-      0 until 4 foreach (i => {
-        Thread.sleep(500)
-        refresh
-      })
-    }
-  }
 }

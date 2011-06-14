@@ -20,12 +20,11 @@ import org.infinispan.notifications.cachemanagerlistener.annotation._
 import org.infinispan.notifications.cachemanagerlistener.event._
 import org.infinispan.lifecycle.ComponentStatus._
 
-class CachePanel(val cache: Cache[String, String], val id: Int) extends GroupPanel {
+class CachePanel(val cacheConfigFile: String, val id: Int) extends GroupPanel {
 
-  val listener = new CacheListener
-  cache.addListener(listener)
-  cache.getCacheManager.addListener(listener)
-  cache.start
+  var cacheManager: DefaultCacheManager = null;
+  var cache: Cache[String, String] = null;
+  startCache
 
   val cacheLabel = new Label("Cache " + id)
   val cacheBar = new ProgressBar {
@@ -49,13 +48,13 @@ class CachePanel(val cache: Cache[String, String], val id: Int) extends GroupPan
       cache.getStatus match {
         case RUNNING => {
           actor {
-            cache.stop
+            stopCache
           }
           stopButton.text = "Start"
         }
         case TERMINATED => {
           actor {
-            cache.start
+            startCache
           }
           stopButton.text = "Stop"
         }
@@ -82,41 +81,71 @@ class CachePanel(val cache: Cache[String, String], val id: Int) extends GroupPan
     )
   }
 
-  def update {
-    Swing.onEDT {
-      if (cache.getStatus == RUNNING) {
-        cacheBar.value = cache.size
-      } else {
-        cacheBar.value = 0
-      }
-      cacheBar.repaint
-    }
-  }
-
   @Listener
   class CacheListener {
     @CacheStarted
     def cacheStarted(e: CacheStartedEvent) {
-      InfinispanSwingDemo.topFrame.refreshDelay
+      RefreshThread.refresh
     }
     
     @ViewChanged
     @Merged
     def viewChangeEvent(e: ViewChangedEvent) {
-      InfinispanSwingDemo.topFrame.refreshDelay
+      RefreshThread.refresh
     }
 
     @CacheEntryCreated
     @CacheEntryModified
     @CacheEntryRemoved
-    @CacheEntryEvicted
+    @CacheEntriesEvicted
     def change(e: Event[String,String]) {
-      if (!e.isPre) update
+      if (!e.isPre) RefreshThread.refresh
     }
 
     @DataRehashed
     def rehash(e: Event[String,String]) {
-      if (!e.isPre) InfinispanSwingDemo.topFrame.refreshDelay
+      if (!e.isPre) RefreshThread.refresh
     }
   }
+
+  def createCacheManager = {
+    var resource = getClass.getClassLoader.getResource(cacheConfigFile)
+    if (resource == null) {
+      val f = new File(cacheConfigFile)
+      if (f.exists) resource = f.toURI.toURL
+    }
+    if (resource == null) resource = new URL(cacheConfigFile)
+
+    var cacheManager: DefaultCacheManager = null
+    if (cacheManager == null) {
+      val stream = resource.openStream()
+      try {
+        cacheManager = new DefaultCacheManager(stream)
+      } finally {
+        try {
+          if (stream != null) {
+            stream.close()
+          }
+        } catch {
+          case _ => ; // ignore
+        }
+      }
+    }
+    cacheManager
+  }
+
+  def startCache {
+    cacheManager = createCacheManager
+    cache = cacheManager.getCache()
+    val listener = new CacheListener
+    cache.addListener(listener)
+    cache.getCacheManager.addListener(listener)
+    cache.start
+    
+  }
+  def stopCache {
+    cache.stop
+    cache.getCacheManager.stop
+  }
+
 }
