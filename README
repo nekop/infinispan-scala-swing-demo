@@ -6,13 +6,17 @@ This project is very early stage and there are a lot of limitations/bugs. Pull r
 
 TODOs:
 
-* spinner, swing worker
-* operation menu
 * view entries
 * error dialog
 * visualize hash
+* fetch twitter stream into the cache
+* runtime emulation. spawn a thread that randomly insert/remove cache entries
 * shortcuts
 * more scala style coding
 * investigate why virtual nodes doesn't work properly
 * investigate why l1.onRehash=false doesn't evict nodes properly
-* make simpler GUI, don't put many fields/buttons on main view, use menu or dialogs instead
+
+FAQs:
+
+* Entry Count doubled.
+  - It's because we have 1 backup copy for every entry, see hash.numOwners in infinispan-demo.xml.
