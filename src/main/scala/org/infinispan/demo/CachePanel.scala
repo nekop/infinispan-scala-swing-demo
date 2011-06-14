@@ -24,7 +24,6 @@ class CachePanel(val cacheConfigFile: String, val id: Int) extends GroupPanel {
 
   var cacheManager: DefaultCacheManager = null;
   var cache: Cache[String, String] = null;
-  startCache
 
   val cacheLabel = new Label("Cache " + id)
   val cacheBar = new ProgressBar {

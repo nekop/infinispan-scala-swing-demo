@@ -134,6 +134,7 @@ class TopFrame(app: SimpleSwingApplication) extends MainFrame {
     actor {
       // todo deal with exceptions, no xml provided
       val cachePanel = new CachePanel(cacheConfigFile, i)
+      cachePanel.startCache
       cachePanelList += cachePanel
       Swing.onEDT {
         mainPanel.contents += cachePanel
