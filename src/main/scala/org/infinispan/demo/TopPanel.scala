@@ -24,9 +24,8 @@ class TopPanel extends GroupPanel {
   val randomGeneratorLabel = new Label("Generate random entries")
   val randomGeneratorText = new TextField("50", 6)
   val randomGeneratorButton = new Button("Generate")
-  val clearButton = new Button("Clear all caches")
 
-  listenTo(configFileButton, startButton, randomGeneratorButton, clearButton)
+  listenTo(configFileButton, startButton, randomGeneratorButton)
   reactions += {
     case ButtonClicked(`configFileButton`) =>
       configFileChooser.showOpenDialog(this) match {
@@ -68,22 +67,6 @@ class TopPanel extends GroupPanel {
         }
       }.execute
     }
-    case ButtonClicked(`clearButton`) => {
-      InfinispanSwingDemo.topFrame.statusPanel.progressBar.indeterminate = true
-      new SwingWorker[Unit, Unit] {
-        def doInBackground {
-          try {
-            InfinispanSwingDemo.topFrame.cachePanelList.head.cache.clear
-          } catch {
-            // todo
-            case e: Exception => e.printStackTrace
-          }
-        }
-        override def done {
-          InfinispanSwingDemo.topFrame.statusPanel.progressBar.indeterminate = false
-        }
-      }.execute
-    }
   }
   autoCreateGaps = true
   autoCreateContainerGaps = true
@@ -96,14 +79,14 @@ class TopPanel extends GroupPanel {
         parallel()(randomGeneratorButton)
       )),
       parallel()(configFileButton),
-      parallel()(startButton, clearButton)
+      parallel()(startButton)
     )
   }
 
   verticalGroup {
     sequential(
       parallel(Alignment.Baseline)(configFileLabel, configFileText, configFileButton, startButton),
-      parallel(Alignment.Baseline)(randomGeneratorLabel, randomGeneratorText, randomGeneratorButton, clearButton)
+      parallel(Alignment.Baseline)(randomGeneratorLabel, randomGeneratorText, randomGeneratorButton)
     )
   }
   

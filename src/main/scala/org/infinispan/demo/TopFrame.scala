@@ -30,30 +30,25 @@ class TopFrame(app: SimpleSwingApplication) extends MainFrame {
         app.quit
       })
     }
+    contents += new Menu ("Cache Operation") {
+      contents += new MenuItem(Action("Clear all") {
+        InfinispanSwingDemo.topFrame.statusPanel.progressBar.indeterminate = true
+        new SwingWorker[Unit, Unit] {
+          def doInBackground {
+            try {
+              InfinispanSwingDemo.topFrame.cachePanelList.head.cache.clear
+            } catch {
+              // todo
+              case e: Exception => e.printStackTrace
+            }
+          }
+          override def done {
+            InfinispanSwingDemo.topFrame.statusPanel.progressBar.indeterminate = false
+          }
+        }.execute
+      })
+    }
     contents += new Menu ("Debug") {
-      contents += new MenuItem(Action("Refresh") {
-        RefreshThread.refresh
-      })
-      contents += new MenuItem(Action("processEviction") {
-        try {
-          InfinispanSwingDemo.topFrame.cachePanelList.foreach(cachePanel => {
-            cachePanel.cache.getAdvancedCache.getEvictionManager.processEviction
-          })
-        } catch {
-          // todo
-          case e: Exception => e.printStackTrace
-        }
-      })
-      contents += new MenuItem(Action("Dump") {
-        try {
-          InfinispanSwingDemo.topFrame.cachePanelList.foreach(cachePanel => {
-            println("Cache " + cachePanel.id + " " + cachePanel.cache + ", size=" + cachePanel.cache.size)
-          })
-        } catch {
-          // todo
-          case e: Exception => e.printStackTrace
-        }
-      })
       contents += new MenuItem(Action("Dump All") {
         try {
           InfinispanSwingDemo.topFrame.cachePanelList.foreach(cachePanel => {
@@ -71,16 +66,6 @@ class TopFrame(app: SimpleSwingApplication) extends MainFrame {
                       ", class=" + entry.getClass()
                     )
             })
-          })
-        } catch {
-          // todo
-          case e: Exception => e.printStackTrace
-        }
-      })
-      contents += new MenuItem(Action("Clear All") {
-        try {
-          InfinispanSwingDemo.topFrame.cachePanelList.foreach(cachePanel => {
-            cachePanel.cache.clear
           })
         } catch {
           // todo
