@@ -113,12 +113,21 @@
             <arg>-deprecation</arg>
           </args>
           <jvmArgs>
+            <jvmArg>-Xmn128m</jvmArg>
+            <jvmArg>-Xms256m</jvmArg>
+            <jvmArg>-Xmx256m</jvmArg>
+            <jvmArg>-Xss128k</jvmArg>
+            <jvmArg>-XX:PermSize=128m</jvmArg>
+            <jvmArg>-XX:+UseConcMarkSweepGC</jvmArg>
+            <jvmArg>-verbose:gc</jvmArg>
+            <jvmArg>-XX:+PrintGCDetails</jvmArg>
+            <jvmArg>-XX:+PrintGCTimeStamps</jvmArg>
+            <jvmArg>-Djava.net.preferIPv4Stack=true</jvmArg>
+            <jvmArg>-Djgroups.bind_addr=localhost</jvmArg>
 <!--
             <jvmArg>-javaagent:${byteman.home}/lib/byteman.jar=boot:${byteman.home}/lib/byteman.jar,listener:true</jvmArg>
             <jvmArg>-Dorg.jboss.byteman.transform.all</jvmArg>
 -->
-            <jvmArg>-Djava.net.preferIPv4Stack=true</jvmArg>
-            <jvmArg>-Djgroups.bind_addr=localhost</jvmArg>
           </jvmArgs>
           <scalaVersion>${version.scala}</scalaVersion>
         </configuration>
