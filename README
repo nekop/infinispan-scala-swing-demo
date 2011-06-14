@@ -1,1 +1,14 @@
 Yet Another Infinispan GUI demo written in Scala.
+
+I'm new to Scala, so the code probably doesen't look like Scala.
+
+TODOs:
+
+* spinner, swing worker
+* operation menu
+* view entries
+* error dialog
+* organize import
+* visualize hash
+* shortcuts
+* more scala style coding
