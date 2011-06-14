@@ -1,27 +1,13 @@
 package org.infinispan.demo
 
-import scala.collection.JavaConversions._
-import swing.SimpleSwingApplication
-import swing.{SwingWorker => _, _}
-import javax.swing.SwingWorker
-import swing.event._
-import util.Random
-
-import javax.swing.filechooser.FileNameExtensionFilter
 import java.io.File
-import java.io.InputStream
-import java.awt.Dimension
-import java.net.URL
 import java.util.HashMap
+import javax.swing.SwingWorker
+import javax.swing.filechooser.FileNameExtensionFilter
+import scala.swing.event._
+import scala.swing.{SwingWorker => _, _}
+import scala.util.Random
 
-import org.infinispan.Cache
-import org.infinispan.manager.DefaultCacheManager
-import org.infinispan.manager.EmbeddedCacheManager
-import org.infinispan.notifications.Listener
-import org.infinispan.notifications.cachelistener.annotation._
-import org.infinispan.notifications.cachelistener.event.Event
-import org.infinispan.notifications.cachemanagerlistener.annotation._
-import org.infinispan.notifications.cachemanagerlistener.event._
 
 class TopPanel extends GroupPanel {
   lazy val random = new Random

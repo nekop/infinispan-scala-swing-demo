@@ -1,24 +1,19 @@
 package org.infinispan.demo
 
-import swing.SimpleSwingApplication
-import swing._
-import swing.event._
-import javax.swing.filechooser.FileNameExtensionFilter
 import java.io.File
-import java.io.InputStream
-import java.awt.Dimension
 import java.net.URL
-
-import actors.Actor._
 import org.infinispan.Cache
+import org.infinispan.lifecycle.ComponentStatus._
 import org.infinispan.manager.DefaultCacheManager
-import org.infinispan.manager.EmbeddedCacheManager
 import org.infinispan.notifications.Listener
 import org.infinispan.notifications.cachelistener.annotation._
 import org.infinispan.notifications.cachelistener.event.Event
 import org.infinispan.notifications.cachemanagerlistener.annotation._
 import org.infinispan.notifications.cachemanagerlistener.event._
-import org.infinispan.lifecycle.ComponentStatus._
+import scala.actors.Actor._
+import scala.swing.event.{Event => _, _}
+import scala.swing.{SwingWorker => _, _}
+
 
 class CachePanel(val cacheConfigFile: String, val id: Int) extends GroupPanel {
 

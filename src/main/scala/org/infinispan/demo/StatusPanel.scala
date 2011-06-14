@@ -1,25 +1,7 @@
 package org.infinispan.demo
 
-import swing.SimpleSwingApplication
-import swing._
-import swing.event._
-import util.Random
+import scala.swing.{SwingWorker => _, _}
 
-import javax.swing.filechooser.FileNameExtensionFilter
-import java.io.File
-import java.io.InputStream
-import java.awt.Dimension
-import java.net.URL
-import java.util.HashMap
-
-import org.infinispan.Cache
-import org.infinispan.manager.DefaultCacheManager
-import org.infinispan.manager.EmbeddedCacheManager
-import org.infinispan.notifications.Listener
-import org.infinispan.notifications.cachelistener.annotation._
-import org.infinispan.notifications.cachelistener.event.Event
-import org.infinispan.notifications.cachemanagerlistener.annotation._
-import org.infinispan.notifications.cachemanagerlistener.event._
 
 class StatusPanel extends GroupPanel {
   //val cacheCountLabel = new Label("Cache Count: 0")
