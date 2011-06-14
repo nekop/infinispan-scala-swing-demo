@@ -2,6 +2,8 @@ Yet Another Infinispan GUI demo written in Scala.
 
 I'm new to Scala, so the code probably doesen't look like Scala.
 
+This project is very early stage and there are a lot of limitations/bugs. Pull requests are highly welcomed!
+
 TODOs:
 
 * spinner, swing worker
@@ -12,3 +14,6 @@ TODOs:
 * visualize hash
 * shortcuts
 * more scala style coding
+* investigate why virtual nodes doesn't work properly
+* investigate why l1.onRehash=false doesn't evict nodes properly
+* make simpler GUI, don't put many fields/buttons on main view, use menu or dialogs instead
