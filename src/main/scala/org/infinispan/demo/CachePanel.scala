@@ -2,6 +2,7 @@ package org.infinispan.demo
 
 import java.io.File
 import java.net.URL
+import javax.swing.SwingWorker
 import org.infinispan.Cache
 import org.infinispan.lifecycle.ComponentStatus._
 import org.infinispan.manager.DefaultCacheManager
@@ -10,7 +11,6 @@ import org.infinispan.notifications.cachelistener.annotation._
 import org.infinispan.notifications.cachelistener.event.Event
 import org.infinispan.notifications.cachemanagerlistener.annotation._
 import org.infinispan.notifications.cachemanagerlistener.event._
-import scala.actors.Actor._
 import scala.swing.event.{Event => _, _}
 import scala.swing.{SwingWorker => _, _}
 
@@ -41,16 +41,28 @@ class CachePanel(val cacheConfigFile: String, val id: Int) extends GroupPanel {
     case ButtonClicked(`stopButton`) => {
       cache.getStatus match {
         case RUNNING => {
-          actor {
-            stopCache
-          }
-          stopButton.text = "Start"
+          new SwingWorker[Unit, Unit] {
+            InfinispanSwingDemo.topFrame.statusPanel.progressBar.indeterminate = true
+            def doInBackground {
+              stopCache
+            }
+            override def done {
+              stopButton.text = "Start"
+              InfinispanSwingDemo.topFrame.statusPanel.progressBar.indeterminate = false
+            }
+          }.execute
         }
         case TERMINATED => {
-          actor {
-            startCache
-          }
-          stopButton.text = "Stop"
+          new SwingWorker[Unit, Unit] {
+            InfinispanSwingDemo.topFrame.statusPanel.progressBar.indeterminate = true
+            def doInBackground {
+              startCache
+            }
+            override def done {
+              stopButton.text = "Stop"
+              InfinispanSwingDemo.topFrame.statusPanel.progressBar.indeterminate = false
+            }
+          }.execute
         }
         case _ => ;
       }
