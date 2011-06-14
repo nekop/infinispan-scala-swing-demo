@@ -13,7 +13,10 @@
    </appender>
 
    <logger name="org.infinispan">
+     <level value="DEBUG"/>
+<!--
      <level value="ALL"/>
+-->
    </logger>
 
    <root>
