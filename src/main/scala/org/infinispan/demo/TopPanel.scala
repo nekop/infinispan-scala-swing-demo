@@ -52,6 +52,10 @@ class TopPanel extends GroupPanel {
             val map = new java.util.HashMap[String,String]()
             for (i <- 0 until count) {
               map.put(random.nextInt.toHexString.toUpperCase, random.nextInt.toHexString.toUpperCase)
+              if (i != 0 && i % 500 == 0) {
+                InfinispanSwingDemo.topFrame.cachePanelList.head.cache.putAll(map)
+                map.clear
+              }
             }
             InfinispanSwingDemo.topFrame.cachePanelList.head.cache.putAll(map)
           } catch {
