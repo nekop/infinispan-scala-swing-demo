@@ -13,6 +13,7 @@ object InfinispanSwingDemo extends SimpleSwingApplication {
   }
 
   override def shutdown {
+    InfinispanSwingDemo.topFrame.cachePanelList.head.cache.clear
     InfinispanSwingDemo.topFrame.cachePanelList.foreach(cachePanel => {
       cachePanel.stopCache
     })
