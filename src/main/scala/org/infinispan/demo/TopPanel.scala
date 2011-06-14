@@ -1,7 +1,9 @@
 package org.infinispan.demo
 
+import scala.collection.JavaConversions._
 import swing.SimpleSwingApplication
-import swing._
+import swing.{SwingWorker => _, _}
+import javax.swing.SwingWorker
 import swing.event._
 import util.Random
 
@@ -55,27 +57,43 @@ class TopPanel extends GroupPanel {
       } catch {
         case e: Exception => e.printStackTrace()
       }
-    case ButtonClicked(`randomGeneratorButton`) =>
-      // todo actor
-      try {
-        val count = randomGeneratorText.text.toInt
-        val map = new HashMap[String,String]() // we need java map here
-        for (i <- 0 until count) {
-          map.put(random.nextInt.toHexString.toUpperCase, random.nextInt.toHexString.toUpperCase)
+    case ButtonClicked(`randomGeneratorButton`) => {
+      InfinispanSwingDemo.topFrame.statusPanel.progressBar.indeterminate = true
+      new SwingWorker[Unit, Unit] {
+        def doInBackground {
+          try {
+            val count = randomGeneratorText.text.toInt
+            val map = new java.util.HashMap[String,String]()
+            for (i <- 0 until count) {
+              map.put(random.nextInt.toHexString.toUpperCase, random.nextInt.toHexString.toUpperCase)
+            }
+            InfinispanSwingDemo.topFrame.cachePanelList.head.cache.putAll(map)
+          } catch {
+            // todo
+            case e: Exception => e.printStackTrace
+          }
         }
-        InfinispanSwingDemo.topFrame.cachePanelList.head.cache.putAll(map)
-      } catch {
-        // todo
-        case e: Exception => e.printStackTrace
-      }
-    case ButtonClicked(`clearButton`) =>
-      // todo actor
-      try {
-        InfinispanSwingDemo.topFrame.cachePanelList.head.cache.clear
-      } catch {
-        // todo
-        case e: Exception => e.printStackTrace
-      }
+        override def done {
+          InfinispanSwingDemo.topFrame.statusPanel.progressBar.indeterminate = false
+        }
+      }.execute
+    }
+    case ButtonClicked(`clearButton`) => {
+      InfinispanSwingDemo.topFrame.statusPanel.progressBar.indeterminate = true
+      new SwingWorker[Unit, Unit] {
+        def doInBackground {
+          try {
+            InfinispanSwingDemo.topFrame.cachePanelList.head.cache.clear
+          } catch {
+            // todo
+            case e: Exception => e.printStackTrace
+          }
+        }
+        override def done {
+          InfinispanSwingDemo.topFrame.statusPanel.progressBar.indeterminate = false
+        }
+      }.execute
+    }
   }
   autoCreateGaps = true
   autoCreateContainerGaps = true

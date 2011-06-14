@@ -3,9 +3,10 @@ package org.infinispan.demo
 import scala.collection.JavaConversions._
 import actors.Actor._
 import swing.SimpleSwingApplication
-import swing._
+import swing.{SwingWorker => _, _}
 import swing.event._
 import collection.mutable._
+import javax.swing.SwingWorker
 import javax.swing.filechooser.FileNameExtensionFilter
 import java.io.File
 import java.io.InputStream
@@ -130,17 +131,21 @@ class TopFrame(app: SimpleSwingApplication) extends MainFrame {
   def startCache(cacheConfigFile: String) {
     val i = cacheCounter
     cacheCounter += 1
-    // todo use SwingWorker, show progress spinner or something
-    actor {
-      // todo deal with exceptions, no xml provided
-      val cachePanel = new CachePanel(cacheConfigFile, i)
-      cachePanel.startCache
-      cachePanelList += cachePanel
+    val cachePanel = new CachePanel(cacheConfigFile, i)
+    new SwingWorker[Unit, Unit] {
       Swing.onEDT {
+        statusPanel.progressBar.indeterminate = true
+      }
+      def doInBackground {
+        // todo deal with exceptions, no xml provided
+        cachePanel.startCache
+        cachePanelList += cachePanel
+      }
+      override def done {
         mainPanel.contents += cachePanel
         mainPanel.revalidate
+        statusPanel.progressBar.indeterminate = false
       }
-    }
+    }.execute
   }
-
 }
