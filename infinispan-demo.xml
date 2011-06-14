@@ -39,8 +39,15 @@
       <!-- Do not set onRehash=false,
            it currently doesn't work and I'll investigate later -->
       <l1 enabled="false" onRehash="true" lifespan="0"/>
-      <hash numOwners="2" numVirtualNodes="5"/>
-      <sync/>
+      <hash numOwners="2"/>
+      <!-- Virtual nodes is not working properly, data loss -->
+<!--
+      <hash
+          numOwners="2"
+          class="org.infinispan.distribution.ch.TopologyAwareConsistentHash"
+          numVirtualNodes="4"/>
+-->
+      <async/>
     </clustering>
     <eviction
         wakeUpInterval="500"
