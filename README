@@ -6,6 +6,7 @@ This project is very early stage and there are a lot of limitations/bugs. Pull r
 
 TODOs:
 
+* make cache bar capacity configurable
 * view entries
 * error dialog
 * visualize hash
