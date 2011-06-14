@@ -30,7 +30,8 @@ object RefreshThread extends Thread {
   def refresh {
     synchronized {
       needRefresh = true
-      notify
+      // Disable dynamic refresh, it's excessive and makes GUI slow
+      //notify
     }
   }
 
