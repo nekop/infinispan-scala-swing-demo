@@ -44,7 +44,11 @@ class CachePanel(val cacheConfigFile: String, val id: Int) extends GroupPanel {
           new SwingWorker[Unit, Unit] {
             InfinispanSwingDemo.topFrame.statusPanel.progressBar.indeterminate = true
             def doInBackground {
-              stopCache
+              try {
+                stopCache
+              } catch {
+                case ex: Exception => ex.printStackTrace
+              }
             }
             override def done {
               stopButton.text = "Start"
@@ -56,7 +60,11 @@ class CachePanel(val cacheConfigFile: String, val id: Int) extends GroupPanel {
           new SwingWorker[Unit, Unit] {
             InfinispanSwingDemo.topFrame.statusPanel.progressBar.indeterminate = true
             def doInBackground {
-              startCache
+              try {
+                startCache
+              } catch {
+                case ex: Exception => ex.printStackTrace
+              }
             }
             override def done {
               stopButton.text = "Stop"

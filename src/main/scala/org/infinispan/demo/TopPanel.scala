@@ -40,7 +40,7 @@ class TopPanel extends GroupPanel {
       try {
         InfinispanSwingDemo.topFrame.startCache(configFileText.text)
       } catch {
-        case e: Exception => e.printStackTrace()
+        case ex: Exception => ex.printStackTrace()
       }
     case ButtonClicked(`randomGeneratorButton`) => {
       InfinispanSwingDemo.topFrame.statusPanel.progressBar.indeterminate = true
@@ -58,8 +58,7 @@ class TopPanel extends GroupPanel {
             }
             InfinispanSwingDemo.topFrame.cachePanelList.head.cache.putAll(map)
           } catch {
-            // todo
-            case e: Exception => e.printStackTrace
+            case ex: Exception => ex.printStackTrace
           }
         }
         override def done {

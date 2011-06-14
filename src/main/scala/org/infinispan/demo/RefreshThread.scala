@@ -16,7 +16,7 @@ object RefreshThread extends Thread {
         try {
           performRefresh
         } catch {
-          case ex: Exception => ex.printStackTrace // todo
+          case ex: Exception => ex.printStackTrace
         }
       } else {
         synchronized {

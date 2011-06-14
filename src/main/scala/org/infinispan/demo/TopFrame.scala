@@ -38,8 +38,7 @@ class TopFrame(app: SimpleSwingApplication) extends MainFrame {
             try {
               InfinispanSwingDemo.topFrame.cachePanelList.head.cache.clear
             } catch {
-              // todo
-              case e: Exception => e.printStackTrace
+              case ex: Exception => ex.printStackTrace
             }
           }
           override def done {
@@ -69,7 +68,7 @@ class TopFrame(app: SimpleSwingApplication) extends MainFrame {
           })
         } catch {
           // todo
-          case e: Exception => e.printStackTrace
+          case ex: Exception => ex.printStackTrace
         }
       })
     }
@@ -106,9 +105,12 @@ class TopFrame(app: SimpleSwingApplication) extends MainFrame {
         statusPanel.progressBar.indeterminate = true
       }
       def doInBackground {
-        // todo deal with exceptions, no xml provided
-        cachePanel.startCache
-        cachePanelList += cachePanel
+        try {
+          cachePanel.startCache
+          cachePanelList += cachePanel
+        } catch {
+          case ex: Exception => ex.printStackTrace
+        }
       }
       override def done {
         mainPanel.contents += cachePanel
