@@ -114,7 +114,7 @@ class TopFrame(app: SimpleSwingApplication) extends MainFrame {
                       ", lifespan=" + entry.getLifespan() +
                       ", maxIdle=" + entry.getMaxIdle() +
                       ", isRemoved=" + entry.isRemoved() +
-                      ", isEvicted=" + entry.isEvicted() +
+                      //", isEvicted=" + entry.isEvicted() + // always true, skip it
                       ", isExpired=" + entry.isExpired() +
                       ", isValid=" + entry.isValid() +
                       ", class=" + entry.getClass()
