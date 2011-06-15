@@ -6,15 +6,15 @@ This project is very early stage and there are a lot of limitations/bugs. Pull r
 
 TODOs:
 
+* kill all caches and cache panels
 * make cache bar capacity configurable
 * view entries
 * error dialog
 * visualize hash
 * fetch twitter stream into the cache
-* runtime emulation. spawn a thread that randomly insert/remove cache entries
+* runtime emulation. spawn threads that randomly insert/remove cache entries and start/stop caches
 * shortcuts
 * more scala style coding
-* investigate why virtual nodes doesn't work properly
 * investigate why l1.onRehash=false doesn't evict nodes properly
 
 FAQs:
