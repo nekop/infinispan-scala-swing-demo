@@ -31,6 +31,20 @@ class TopFrame(app: SimpleSwingApplication) extends MainFrame {
         app.quit
       })
     }
+    contents += new Menu ("Config") {
+      contents += new MenuItem(Action("Cache bar capacity") {
+        val value = showInput[String]("Please input value", "Cache bar capacity")
+        if (value.nonEmpty) {
+          InfinispanSwingDemo.topFrame.cachePanelList.foreach(cachePanel => {
+            try {
+              cachePanel.cacheBar.max = value.get.toInt
+            } catch {
+              case _ => ; // ignore
+            }
+          })
+        }
+      })
+    }
     contents += new Menu ("Cache Operation") {
       contents += new MenuItem(Action("Add entry") {
         val key = showInput("Please input key", "Add entry")
