@@ -33,11 +33,15 @@ class CachePanel(val cacheConfigFile: String, val id: Int) extends GroupPanel {
     labelPainted = true
     value = 0
   }
-
+  val showButton = new Button("Show entries")
   val stopButton = new Button("Stop")
 
-  listenTo(stopButton)
+  listenTo(showButton, stopButton)
   reactions += {
+    case ButtonClicked(`showButton`) => {
+      val dataDialog = new DataDialog(InfinispanSwingDemo.topFrame, cache)
+      dataDialog.open
+    }
     case ButtonClicked(`stopButton`) => {
       cache.getStatus match {
         case RUNNING => {
@@ -85,13 +89,14 @@ class CachePanel(val cacheConfigFile: String, val id: Int) extends GroupPanel {
     sequential(
       parallel()(cacheLabel),
       parallel()(cacheBar),
+      parallel()(showButton),
       parallel()(stopButton)
     )
   }
 
   verticalGroup {
     sequential(
-      parallel(Alignment.Baseline)(cacheLabel, cacheBar, stopButton)
+      parallel(Alignment.Baseline)(cacheLabel, cacheBar, showButton, stopButton)
     )
   }
 

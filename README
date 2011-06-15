@@ -8,7 +8,6 @@ TODOs:
 
 * kill all caches and cache panels
 * auto resize cache bar capacity
-* view entries
 * error dialog
 * visualize hash
 * fetch twitter stream into the cache
