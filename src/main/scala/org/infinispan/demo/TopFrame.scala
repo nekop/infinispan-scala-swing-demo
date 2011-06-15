@@ -1,5 +1,6 @@
 package org.infinispan.demo
 
+import javax.swing.JOptionPane
 import javax.swing.SwingWorker
 import scala.collection.JavaConversions._
 import scala.collection.mutable.ListBuffer
@@ -31,6 +32,46 @@ class TopFrame(app: SimpleSwingApplication) extends MainFrame {
       })
     }
     contents += new Menu ("Cache Operation") {
+      contents += new MenuItem(Action("Add entry") {
+        val key = showInput("Please input key", "Add entry")
+        if (key.nonEmpty) {
+          val value = showInput("Please input value", "Add entry")
+          if (value.nonEmpty) {
+            InfinispanSwingDemo.topFrame.statusPanel.progressBar.indeterminate = true
+            new SwingWorker[Unit, Unit] {
+              def doInBackground {
+                try {
+                  InfinispanSwingDemo.topFrame.cachePanelList.head.cache.put(key.get, value.get)
+                } catch {
+                  case ex: Exception => ex.printStackTrace
+                }
+              }
+              override def done {
+                InfinispanSwingDemo.topFrame.statusPanel.progressBar.indeterminate = false
+              }
+            }.execute
+          }
+        }
+      })
+      contents += new MenuItem(Action("Remove entry") {
+        val key = showInput("Please input key", "Remove entry")
+        if (key.nonEmpty) {
+          InfinispanSwingDemo.topFrame.statusPanel.progressBar.indeterminate = true
+          new SwingWorker[Unit, Unit] {
+            def doInBackground {
+              try {
+                InfinispanSwingDemo.topFrame.cachePanelList.head.cache.remove(key.get)
+              } catch {
+                case ex: Exception => ex.printStackTrace
+              }
+            }
+            override def done {
+              InfinispanSwingDemo.topFrame.statusPanel.progressBar.indeterminate = false
+            }
+          }.execute
+        }
+      })
+      contents += new Separator
       contents += new MenuItem(Action("Clear all") {
         InfinispanSwingDemo.topFrame.statusPanel.progressBar.indeterminate = true
         new SwingWorker[Unit, Unit] {
@@ -119,4 +160,18 @@ class TopFrame(app: SimpleSwingApplication) extends MainFrame {
       }
     }.execute
   }
+
+  // scala.swing.Dialog.showInput doesn't accept Container, so define my own
+  def showInput[A](message: Object, title: String): Option[A] = {
+    val r = JOptionPane.showInputDialog(topFrame.peer,
+                                        message,
+                                        title,
+                                        JOptionPane.QUESTION_MESSAGE,
+                                        null,
+                                        null,
+                                        null)
+    toOption(r)
+  }
+
+  def toOption[A](o: Object): Option[A] = if(o eq null) None else Some(o.asInstanceOf[A])
 }
