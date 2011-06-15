@@ -10,7 +10,7 @@ class StatusPanel extends GroupPanel {
   val progressBar = new ProgressBar {
     maximumSize = new Dimension(120, 20)
   }
-  javax.swing.UIManager.getLookAndFeelDefaults.put("ProgressBar.cycleTime", 1500) // make it faster, 3000 by default 
+  javax.swing.UIManager.put("ProgressBar.cycleTime", 1500) // make it faster, 3000 by default 
 
   autoCreateGaps = true
   autoCreateContainerGaps = false
