@@ -126,6 +126,9 @@ class TopFrame(app: SimpleSwingApplication) extends MainFrame {
           case ex: Exception => ex.printStackTrace
         }
       })
+      contents += new MenuItem(Action("System.gc()") {
+        System.gc()
+      })
     }
   }
 
