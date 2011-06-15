@@ -7,7 +7,7 @@ This project is very early stage and there are a lot of limitations/bugs. Pull r
 TODOs:
 
 * kill all caches and cache panels
-* make cache bar capacity configurable
+* auto resize cache bar capacity
 * view entries
 * error dialog
 * visualize hash
@@ -16,6 +16,7 @@ TODOs:
 * shortcuts
 * more scala style coding
 * investigate why l1.onRehash=false doesn't evict nodes properly
+  - https://issues.jboss.org/browse/ISPN-1012
 
 FAQs:
 
