@@ -48,7 +48,6 @@
   <properties>
     <version.infinispan>5.0.0.CR4</version.infinispan>
     <version.scala>2.8.1</version.scala>
-    <version.jcipannotations>1.0</version.jcipannotations>
     <version.log4j>1.2.16</version.log4j>
   </properties>
 
@@ -62,12 +61,6 @@
       <groupId>org.scala-lang</groupId>
       <artifactId>scala-swing</artifactId>
       <version>${version.scala}</version>
-    </dependency>
-    <dependency>
-      <groupId>net.jcip</groupId>
-      <artifactId>jcip-annotations</artifactId>
-      <version>${version.jcipannotations}</version>
-      <optional>true</optional>
     </dependency>
     <dependency>
       <groupId>log4j</groupId>
