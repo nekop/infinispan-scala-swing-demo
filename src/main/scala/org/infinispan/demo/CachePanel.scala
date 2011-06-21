@@ -116,7 +116,7 @@ class CachePanel(val cacheConfigFile: String, val id: Int) extends GroupPanel {
     @CacheEntryCreated
     @CacheEntryModified
     @CacheEntryRemoved
-    @CacheEntryEvicted
+    @CacheEntriesEvicted
     def change(e: Event[String,String]) {
       if (!e.isPre) RefreshThread.refresh
     }

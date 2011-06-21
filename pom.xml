@@ -28,7 +28,7 @@
 
   <groupId>org.infinispan</groupId>
   <artifactId>infinispan-scala-swing-demo</artifactId>
-  <version>1.0.0</version>
+  <version>1.0.0-SNAPSHOT</version>
   <packaging>jar</packaging>
   <name>Infinispan Scala Swing Demo</name>
   <description>Infinispan Scala Swing Demo</description>
@@ -46,7 +46,7 @@
   </repositories>
 
   <properties>
-    <version.infinispan>5.0.0.CR4</version.infinispan>
+    <version.infinispan>5.0.0.CR6</version.infinispan>
     <version.scala>2.8.1</version.scala>
     <version.log4j>1.2.16</version.log4j>
   </properties>

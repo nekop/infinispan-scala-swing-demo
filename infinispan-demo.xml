@@ -36,16 +36,11 @@
 
   <default>
     <clustering mode="distribution">
-      <!-- Do not set onRehash=false,
-           it currently doesn't work and I'll investigate later -->
-      <l1 enabled="true" onRehash="true" lifespan="0"/>
-      <hash numOwners="2"/>
-<!--
+      <l1 enabled="false" />
       <hash
           numOwners="2"
           class="org.infinispan.distribution.ch.TopologyAwareConsistentHash"
-          numVirtualNodes="4"/>
--->
+          numVirtualNodes="20"/>
       <async/>
     </clustering>
     <eviction
