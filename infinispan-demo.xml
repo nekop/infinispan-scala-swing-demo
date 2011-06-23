@@ -45,7 +45,7 @@
     </clustering>
     <eviction
         wakeUpInterval="500"
-        maxEntries="200000"
+        maxEntries="10000000"
         strategy="LIRS" />
   </default>
 
