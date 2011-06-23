@@ -14,8 +14,6 @@ TODOs:
 * runtime emulation. spawn threads that randomly insert/remove cache entries and start/stop caches
 * shortcuts
 * more scala style coding
-* investigate why l1.onRehash=false doesn't evict nodes properly
-  - https://issues.jboss.org/browse/ISPN-1012
 
 FAQs:
 
