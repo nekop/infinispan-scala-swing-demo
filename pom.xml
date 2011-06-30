@@ -28,7 +28,7 @@
 
   <groupId>org.infinispan</groupId>
   <artifactId>infinispan-scala-swing-demo</artifactId>
-  <version>1.0.0</version>
+  <version>1.0.1-SNAPSHOT</version>
   <packaging>jar</packaging>
   <name>Infinispan Scala Swing Demo</name>
   <description>Infinispan Scala Swing Demo</description>
