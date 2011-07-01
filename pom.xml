@@ -107,8 +107,8 @@
           </args>
           <jvmArgs>
             <jvmArg>-Xmn128m</jvmArg>
-            <jvmArg>-Xms256m</jvmArg>
-            <jvmArg>-Xmx256m</jvmArg>
+            <jvmArg>-Xms512m</jvmArg>
+            <jvmArg>-Xmx512m</jvmArg>
             <jvmArg>-Xss512k</jvmArg>
             <jvmArg>-XX:PermSize=128m</jvmArg>
             <jvmArg>-XX:+UseConcMarkSweepGC</jvmArg>
