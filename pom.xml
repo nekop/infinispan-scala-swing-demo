@@ -46,7 +46,7 @@
   </repositories>
 
   <properties>
-    <version.infinispan>5.0.0.CR7</version.infinispan>
+    <version.infinispan>5.0.0.CR8</version.infinispan>
     <version.scala>2.8.1</version.scala>
     <version.log4j>1.2.16</version.log4j>
   </properties>
@@ -109,6 +109,9 @@
             <jvmArg>-Xmn128m</jvmArg>
             <jvmArg>-Xms512m</jvmArg>
             <jvmArg>-Xmx512m</jvmArg>
+<!-- if you want more than 4 nodes
+            <jvmArg>-Xmx2048m</jvmArg>
+-->
             <jvmArg>-Xss512k</jvmArg>
             <jvmArg>-XX:PermSize=128m</jvmArg>
             <jvmArg>-XX:+UseConcMarkSweepGC</jvmArg>
