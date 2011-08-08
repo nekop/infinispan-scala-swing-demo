@@ -101,6 +101,30 @@ class TopFrame(app: SimpleSwingApplication) extends MainFrame {
           }
         }.execute
       })
+      contents += new MenuItem(Action("Stop other than first") {
+        InfinispanSwingDemo.topFrame.statusPanel.progressBar.indeterminate = true
+        new SwingWorker[Unit, Unit] {
+          def doInBackground {
+            try {
+              InfinispanSwingDemo.topFrame.cachePanelList.reverse.foreach(cachePanel => {
+                if (cachePanel != InfinispanSwingDemo.topFrame.cachePanelList.head) {
+                  cachePanel.stopCache
+                }
+              })
+            } catch {
+              case ex: Exception => ex.printStackTrace
+            }
+          }
+          override def done {
+            InfinispanSwingDemo.topFrame.cachePanelList.reverse.foreach(cachePanel => {
+              if (cachePanel != InfinispanSwingDemo.topFrame.cachePanelList.head) {
+                cachePanel.stopButton.text = "Start"
+              }
+            })
+            InfinispanSwingDemo.topFrame.statusPanel.progressBar.indeterminate = false
+          }
+        }.execute
+      })
     }
     contents += new Menu ("Debug") {
       contents += new MenuItem(Action("Dump All") {
@@ -125,6 +149,26 @@ class TopFrame(app: SimpleSwingApplication) extends MainFrame {
           // todo
           case ex: Exception => ex.printStackTrace
         }
+      })
+      contents += new MenuItem(Action("Concurrent stop other than first (data loss)") {
+        InfinispanSwingDemo.topFrame.statusPanel.progressBar.indeterminate = true
+        InfinispanSwingDemo.topFrame.cachePanelList.reverse.foreach(cachePanel => {
+          if (cachePanel != InfinispanSwingDemo.topFrame.cachePanelList.head) {
+            new SwingWorker[Unit, Unit] {
+              def doInBackground {
+                try {
+                  cachePanel.stopCache
+                } catch {
+                  case ex: Exception => ex.printStackTrace
+                }
+              }
+              override def done {
+                cachePanel.stopButton.text = "Start"
+              }
+            }.execute
+          }
+        })
+        InfinispanSwingDemo.topFrame.statusPanel.progressBar.indeterminate = false
       })
       contents += new MenuItem(Action("System.gc()") {
         System.gc()
