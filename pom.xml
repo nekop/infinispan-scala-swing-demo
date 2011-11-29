@@ -114,6 +114,7 @@
 -->
             <jvmArg>-Xss512k</jvmArg>
             <jvmArg>-XX:PermSize=128m</jvmArg>
+            <jvmArg>-Xverify:none</jvmArg>
             <jvmArg>-XX:+UseConcMarkSweepGC</jvmArg>
             <jvmArg>-verbose:gc</jvmArg>
             <jvmArg>-XX:+PrintGCDetails</jvmArg>
@@ -121,6 +122,8 @@
             <jvmArg>-Djava.net.preferIPv4Stack=true</jvmArg>
             <jvmArg>-Djgroups.bind_addr=localhost</jvmArg>
 <!--
+            <jvmArg>-XX:+TieredCompilation</jvmArg>
+            <jvmArg>-XX:+UseCompressedOops</jvmArg>
             <jvmArg>-javaagent:${byteman.home}/lib/byteman.jar=boot:${byteman.home}/lib/byteman.jar,listener:true</jvmArg>
             <jvmArg>-Dorg.jboss.byteman.transform.all</jvmArg>
 -->
