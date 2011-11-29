@@ -5,6 +5,7 @@ import javax.swing.SwingWorker
 import scala.collection.JavaConversions._
 import scala.collection.mutable.ListBuffer
 import scala.swing.{SwingWorker => _, _}
+import eu.flierl.grouppanel.GroupPanel
 
 
 class TopFrame(app: SimpleSwingApplication) extends MainFrame {
@@ -177,22 +178,15 @@ class TopFrame(app: SimpleSwingApplication) extends MainFrame {
   }
 
   contents = new GroupPanel {
-    autoCreateGaps = true
-    autoCreateContainerGaps = true
+    theHorizontalLayout is Sequential(
+      Parallel(topPanel, scrollPane, statusPanel)
+    )
 
-    horizontalGroup {
-      sequential(
-        parallel()(topPanel, scrollPane, statusPanel)
-      )
-    }
-
-    verticalGroup {
-      sequential(
-        parallel(Alignment.Baseline)(topPanel),
-        parallel(Alignment.Baseline)(scrollPane),
-        parallel(Alignment.Baseline)(statusPanel)
-      )
-    }
+    theVerticalLayout is Sequential(
+      Parallel(Baseline)(topPanel),
+      Parallel(Baseline)(scrollPane),
+      Parallel(Baseline)(statusPanel)
+    )
   }
 
   // testing, auto start

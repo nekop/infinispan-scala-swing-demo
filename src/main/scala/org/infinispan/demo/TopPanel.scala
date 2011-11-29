@@ -7,6 +7,7 @@ import javax.swing.filechooser.FileNameExtensionFilter
 import scala.swing.event._
 import scala.swing.{SwingWorker => _, _}
 import scala.util.Random
+import eu.flierl.grouppanel.GroupPanel
 
 
 class TopPanel extends GroupPanel {
@@ -67,27 +68,19 @@ class TopPanel extends GroupPanel {
       }.execute
     }
   }
-  autoCreateGaps = true
-  autoCreateContainerGaps = true
 
-  horizontalGroup {
-    sequential(
-      parallel()(configFileLabel, randomGeneratorLabel),
-      parallel()(configFileText, sequential(
-        parallel()(randomGeneratorText),
-        parallel()(randomGeneratorButton)
-      )),
-      parallel()(configFileButton),
-      parallel()(startButton)
-    )
-  }
+  theHorizontalLayout is Sequential(
+    Parallel(configFileLabel, randomGeneratorLabel),
+    Parallel(configFileText, Sequential(Parallel(randomGeneratorText), Parallel(randomGeneratorButton))),
+    Parallel(configFileButton),
+    Parallel(startButton)
+    
+  )
 
-  verticalGroup {
-    sequential(
-      parallel(Alignment.Baseline)(configFileLabel, configFileText, configFileButton, startButton),
-      parallel(Alignment.Baseline)(randomGeneratorLabel, randomGeneratorText, randomGeneratorButton)
-    )
-  }
+  theVerticalLayout is Sequential(
+    Parallel(Baseline)(configFileLabel, configFileText, configFileButton, startButton),
+    Parallel(Baseline)(randomGeneratorLabel, randomGeneratorText, randomGeneratorButton)
+  )
   
 }
 

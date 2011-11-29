@@ -2,6 +2,7 @@ package org.infinispan.demo
 
 import java.awt.Dimension
 import scala.swing.{SwingWorker => _, _}
+import eu.flierl.grouppanel.GroupPanel
 
 
 class StatusPanel extends GroupPanel {
@@ -12,24 +13,19 @@ class StatusPanel extends GroupPanel {
   }
   javax.swing.UIManager.put("ProgressBar.cycleTime", 1500) // make it faster, 3000 by default 
 
-  autoCreateGaps = true
   autoCreateContainerGaps = false
 
-  horizontalGroup {
-    sequential(
-      parallel()(cacheCountLabel),
-      parallel()(Gap(SizeRange(0,32,32))),
-      parallel()(entryCountLabel),
-      parallel()(Gap(SizeRange(0,0,Int.MaxValue))),
-      parallel(Alignment.Trailing)(progressBar)
-    )
-  }
+  theHorizontalLayout is Sequential(
+    Parallel(cacheCountLabel),
+    Parallel(Gap(0,32,32)),
+    Parallel(entryCountLabel),
+    Parallel(Gap(0,0,Int.MaxValue)),
+    Parallel(Trailing)(progressBar)
+  )
 
-  verticalGroup {
-    sequential(
-      parallel(Alignment.Baseline)(cacheCountLabel, entryCountLabel, progressBar)
-    )
-  }
+  theVerticalLayout is Sequential(
+    Parallel(Baseline)(cacheCountLabel, entryCountLabel, progressBar)
+  )
 
   def updateEntryCountLabel(i: Int) {
     entryCountLabel.text = "Entry Count: " + i

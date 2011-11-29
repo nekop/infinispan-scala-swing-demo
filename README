@@ -4,6 +4,8 @@ I'm new to Scala, so the code probably doesen't look like Scala.
 
 This project is very early stage and there are a lot of limitations/bugs. Pull requests are highly welcomed!
 
+This project uses GroupPanel from https://bitbucket.org/asflierl/grouppanel/wiki/Home, asflierl-grouppanel-release-1.2.3.
+
 TODOs:
 
 * kill all caches and cache panels

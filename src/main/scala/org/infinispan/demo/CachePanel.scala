@@ -13,6 +13,7 @@ import org.infinispan.notifications.cachemanagerlistener.annotation._
 import org.infinispan.notifications.cachemanagerlistener.event._
 import scala.swing.event.{Event => _, _}
 import scala.swing.{SwingWorker => _, _}
+import eu.flierl.grouppanel.GroupPanel
 
 
 class CachePanel(val cacheConfigFile: String, val id: Int) extends GroupPanel {
@@ -82,23 +83,16 @@ class CachePanel(val cacheConfigFile: String, val id: Int) extends GroupPanel {
   }
 
 
-  autoCreateGaps = true
-  autoCreateContainerGaps = true
+  theHorizontalLayout is Sequential(
+    Parallel(cacheLabel),
+    Parallel(cacheBar),
+    Parallel(showButton),
+    Parallel(stopButton)
+  )
 
-  horizontalGroup {
-    sequential(
-      parallel()(cacheLabel),
-      parallel()(cacheBar),
-      parallel()(showButton),
-      parallel()(stopButton)
-    )
-  }
-
-  verticalGroup {
-    sequential(
-      parallel(Alignment.Baseline)(cacheLabel, cacheBar, showButton, stopButton)
-    )
-  }
+  theVerticalLayout is Sequential(
+    Parallel(Baseline)(cacheLabel, cacheBar, showButton, stopButton)
+  )
 
   @Listener
   class CacheListener {

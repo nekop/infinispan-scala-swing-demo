@@ -5,7 +5,7 @@ import scala.collection.mutable.ArrayBuffer
 import scala.collection.JavaConversions._
 import scala.swing.event.{Event => _, _}
 import scala.swing.{SwingWorker => _, _}
-
+import eu.flierl.grouppanel.GroupPanel
 
 class DataDialog(owner: Window, val cache: Cache[String, String]) extends Dialog(owner) {
   modal = true
@@ -30,21 +30,15 @@ class DataDialog(owner: Window, val cache: Cache[String, String]) extends Dialog
   }
 
   contents = new GroupPanel {
-    autoCreateGaps = true
-    autoCreateContainerGaps = true
+    theHorizontalLayout is Sequential(
+      Parallel(noteLabel, dataTableContainer, closeButton)
+    )
 
-    horizontalGroup {
-      sequential(
-        parallel(Alignment.Center)(noteLabel, dataTableContainer, closeButton)
-      )
-    }
-
-    verticalGroup {
-      sequential(
-        parallel(Alignment.Baseline)(noteLabel),
-        parallel(Alignment.Baseline)(dataTableContainer),
-        parallel(Alignment.Baseline)(closeButton)
-      )
-    }
+    theVerticalLayout is Sequential(
+      Parallel(Baseline)(noteLabel),
+      Parallel(Baseline)(dataTableContainer),
+      Parallel(Baseline)(closeButton)
+    )
   }
+
 }
