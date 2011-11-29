@@ -28,7 +28,7 @@
 
   <groupId>org.infinispan</groupId>
   <artifactId>infinispan-scala-swing-demo</artifactId>
-  <version>1.0.1-SNAPSHOT</version>
+  <version>1.1.0-SNAPSHOT</version>
   <packaging>jar</packaging>
   <name>Infinispan Scala Swing Demo</name>
   <description>Infinispan Scala Swing Demo</description>
@@ -46,7 +46,7 @@
   </repositories>
 
   <properties>
-    <version.infinispan>5.0.0.FINAL</version.infinispan>
+    <version.infinispan>5.1.0.BETA5</version.infinispan>
     <version.scala>2.8.1</version.scala>
     <version.log4j>1.2.16</version.log4j>
   </properties>
@@ -107,8 +107,8 @@
           </args>
           <jvmArgs>
             <jvmArg>-Xmn128m</jvmArg>
-            <jvmArg>-Xms512m</jvmArg>
-            <jvmArg>-Xmx512m</jvmArg>
+            <jvmArg>-Xms1024m</jvmArg>
+            <jvmArg>-Xmx1024m</jvmArg>
 <!-- if you want more than 4 nodes
             <jvmArg>-Xmx2048m</jvmArg>
 -->
@@ -121,9 +121,9 @@
             <jvmArg>-XX:+PrintGCTimeStamps</jvmArg>
             <jvmArg>-Djava.net.preferIPv4Stack=true</jvmArg>
             <jvmArg>-Djgroups.bind_addr=localhost</jvmArg>
-<!--
             <jvmArg>-XX:+TieredCompilation</jvmArg>
             <jvmArg>-XX:+UseCompressedOops</jvmArg>
+<!--
             <jvmArg>-javaagent:${byteman.home}/lib/byteman.jar=boot:${byteman.home}/lib/byteman.jar,listener:true</jvmArg>
             <jvmArg>-Dorg.jboss.byteman.transform.all</jvmArg>
 -->
