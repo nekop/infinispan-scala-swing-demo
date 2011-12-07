@@ -46,10 +46,13 @@
   </repositories>
 
   <properties>
-    <version.infinispan>5.1.0.BETA5</version.infinispan>
+    <version.infinispan>5.1.0.CR1</version.infinispan>
     <version.jcipannotations>1.0</version.jcipannotations>
     <version.scala>2.9.1</version.scala>
     <version.log4j>1.2.16</version.log4j>
+    <version.maven>3.0.3</version.maven>
+    <version.maven-scala-plugin>2.15.2</version.maven-scala-plugin>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 
   <dependencies>
@@ -86,6 +89,7 @@
       <plugin>
         <groupId>org.scala-tools</groupId>
         <artifactId>maven-scala-plugin</artifactId>
+        <version>${version.maven-scala-plugin}</version>
         <executions>
           <execution>
             <id>compile</id>
