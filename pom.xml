@@ -46,7 +46,7 @@
   </repositories>
 
   <properties>
-    <version.infinispan>5.1.0.CR4</version.infinispan>
+    <version.infinispan>5.1.0.FINAL</version.infinispan>
     <version.jcipannotations>1.0</version.jcipannotations>
     <version.scala>2.9.1</version.scala>
     <version.log4j>1.2.16</version.log4j>
