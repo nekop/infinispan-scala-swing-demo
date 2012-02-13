@@ -40,8 +40,7 @@
       <l1 enabled="false" />
       <hash
           numOwners="2"
-          class="org.infinispan.distribution.ch.TopologyAwareConsistentHash"
-          numVirtualNodes="20"/>
+          numVirtualNodes="48"/>
       <async/>
     </clustering>
     <eviction
