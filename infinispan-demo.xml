@@ -32,6 +32,7 @@
         <property name="configurationFile" value="jgroups-udp.xml" />
       </properties>
     </transport>
+    <shutdown hookBehavior="DONT_REGISTER" />
   </global>
 
   <default>
