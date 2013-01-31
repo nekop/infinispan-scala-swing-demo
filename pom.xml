@@ -46,11 +46,11 @@
   </repositories>
 
   <properties>
-    <version.infinispan>5.1.4.FINAL</version.infinispan>
+    <version.infinispan>5.2.0.Final</version.infinispan>
     <version.jcipannotations>1.0</version.jcipannotations>
     <version.scala>2.9.2</version.scala>
     <version.log4j>1.2.16</version.log4j>
-    <version.maven>3.0.3</version.maven>
+    <version.maven>3.0.4</version.maven>
     <version.maven-scala-plugin>2.15.2</version.maven-scala-plugin>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
